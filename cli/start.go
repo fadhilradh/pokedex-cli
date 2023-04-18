@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"log"
 	"os"
+
+	"github.com/fadhilradh/pokedex-cli/pokedex"
 )
 
-func Start() {
+func Start(config *pokedex.Config) {
 
 	for {
 		fmt.Print("Pokedex > ")

@@ -20,13 +20,18 @@ type Maps struct {
 	Results  []MapResult `json:"results"`
 }
 
-func GetMap() {
-
-	res, err := http.Get("http://www.google.com/robots.txt")
+func GetMap(url *string) Maps {
+	reqUrl := BaseUrl
+	if url != nil {
+		reqUrl = *url
+	}
+	fmt.Println(reqUrl)
+	res, err := http.Get(reqUrl)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer res.Body.Close()
+
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
 		log.Printf("error decoding response: %v", err)
@@ -40,5 +45,5 @@ func GetMap() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(maps)
+	return maps
 }
