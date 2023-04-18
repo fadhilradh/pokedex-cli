@@ -75,14 +75,19 @@ func commandMap() error {
 }
 
 func commandMapBack() error {
-	maps := pokedex.GetMap(pokedex.Cfg.PrevLocURL)
-	for _, loc := range maps.Results {
-		fmt.Println(loc.Name)
-	}
-	fmt.Println()
+	prevUrl := pokedex.Cfg.PrevLocURL
+	if prevUrl == nil {
+		fmt.Println("Oops. There is no previous map")
+	} else {
+		maps := pokedex.GetMap(prevUrl)
+		for _, loc := range maps.Results {
+			fmt.Println(loc.Name)
+		}
+		fmt.Println()
 
-	pokedex.Cfg.NextLocURL = maps.Next
-	pokedex.Cfg.PrevLocURL = maps.Previous
+		pokedex.Cfg.NextLocURL = maps.Next
+		pokedex.Cfg.PrevLocURL = maps.Previous
+	}
 
 	return nil
 }
