@@ -17,8 +17,8 @@ func Start() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		if scanner.Text() == "exit" {
-			break
-		}
+
+		commands := GetCommand()
+		commands[scanner.Text()].callback()
 	}
 }
