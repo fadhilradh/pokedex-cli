@@ -1,15 +1,20 @@
-package cli
+package main
 
 import (
 	"bufio"
 	"fmt"
 	"log"
 	"os"
-
-	"github.com/fadhilradh/pokedex-cli/pokedex"
 )
 
-func Start(config *pokedex.Config) {
+type Config struct {
+	NextLocURL *string
+	PrevLocURL *string
+}
+
+var Cfg = Config{}
+
+func Start(config *Config) {
 
 	for {
 		fmt.Print("Pokedex > ")

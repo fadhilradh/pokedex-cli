@@ -1,4 +1,4 @@
-package pokedex
+package pokeapi
 
 import (
 	"encoding/json"
@@ -19,6 +19,8 @@ type Maps struct {
 	Previous *string     `json:"previous"`
 	Results  []MapResult `json:"results"`
 }
+
+const BaseUrl = "https://pokeapi.co/api/v2/location"
 
 func GetMap(url *string) Maps {
 	reqUrl := BaseUrl

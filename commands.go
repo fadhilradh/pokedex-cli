@@ -1,10 +1,10 @@
-package cli
+package main
 
 import (
 	"fmt"
 	"os"
 
-	"github.com/fadhilradh/pokedex-cli/pokedex"
+	"github.com/fadhilradh/pokedex-cli/internal/pokeapi"
 )
 
 type cliCommand struct {
@@ -60,33 +60,32 @@ func commandExit() error {
 }
 
 func commandMap() error {
-	cfg := pokedex.Cfg
-	nextUrl := cfg.NextLocURL
-	maps := pokedex.GetMap(nextUrl)
+	nextUrl := Cfg.NextLocURL
+	maps := pokeapi.GetMap(nextUrl)
 	for _, loc := range maps.Results {
 		fmt.Println(loc.Name)
 	}
 	fmt.Println()
 
-	cfg.NextLocURL = maps.Next
-	cfg.PrevLocURL = maps.Previous
+	Cfg.NextLocURL = maps.Next
+	Cfg.PrevLocURL = maps.Previous
 
 	return nil
 }
 
 func commandMapBack() error {
-	prevUrl := pokedex.Cfg.PrevLocURL
+	prevUrl := Cfg.PrevLocURL
 	if prevUrl == nil {
 		fmt.Println("Oops. There is no previous map")
 	} else {
-		maps := pokedex.GetMap(prevUrl)
+		maps := pokeapi.GetMap(prevUrl)
 		for _, loc := range maps.Results {
 			fmt.Println(loc.Name)
 		}
 		fmt.Println()
 
-		pokedex.Cfg.NextLocURL = maps.Next
-		pokedex.Cfg.PrevLocURL = maps.Previous
+		Cfg.NextLocURL = maps.Next
+		Cfg.PrevLocURL = maps.Previous
 	}
 
 	return nil
