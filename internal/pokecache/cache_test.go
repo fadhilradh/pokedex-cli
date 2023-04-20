@@ -17,8 +17,8 @@ func TestAddGet(t *testing.T) {
 			val: []byte("testdata"),
 		},
 		{
-			key: "https://example.com",
-			val: []byte("testdata"),
+			key: "https://example.co",
+			val: []byte("moretestdata"),
 		},
 	}
 
@@ -36,5 +36,26 @@ func TestAddGet(t *testing.T) {
 				return
 			}
 		})
+	}
+}
+
+func TestReapLoop(t *testing.T) {
+	const baseTime = 100 * time.Millisecond
+	const waitTime = baseTime + 100*time.Millisecond
+	testCache := NewCache(baseTime)
+	testCache.Add("https://1.com", []byte("test"))
+
+	_, ok := testCache.Get("https://1.com")
+	if !ok {
+		t.Errorf("expected to find key")
+		return
+	}
+
+	time.Sleep(waitTime)
+
+	_, ok = testCache.Get("https://1.com")
+	if ok {
+		t.Errorf("expected to not find key")
+		return
 	}
 }
