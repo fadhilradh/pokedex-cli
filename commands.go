@@ -13,38 +13,12 @@ type cliCommand struct {
 	callback    func() error
 }
 
-func GetCommand() map[string]cliCommand {
-	return map[string]cliCommand{
-		"help": {
-			name:        "help",
-			description: "Displays a help message",
-			callback:    commandHelp,
-		},
-		"exit": {
-			name:        "exit",
-			description: "Exit the Pokedex",
-			callback:    commandExit,
-		},
-		"map": {
-			name:        "map",
-			description: "List all locations of PokeMap",
-			callback:    commandMap,
-		},
-		"mapb": {
-			name:        "map back",
-			description: "List all locations of PokeMap",
-			callback:    commandMapBack,
-		},
-	}
-
-}
-
 func commandHelp() error {
 	fmt.Println("Welcome to the Pokedex!")
 	fmt.Println("Usage:")
 	fmt.Println()
 
-	for _, cmd := range GetCommand() {
+	for _, cmd := range getCommand() {
 		fmt.Printf("%s: %s\n", cmd.name, cmd.description)
 	}
 
