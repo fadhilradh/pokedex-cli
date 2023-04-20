@@ -18,10 +18,10 @@ type config struct {
 var cfg = config{}
 
 func Start(config *config) {
+	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
 		fmt.Print("Pokedex > ")
-		scanner := bufio.NewScanner(os.Stdin)
 		scanner.Scan()
 		err := scanner.Err()
 		if err != nil {
@@ -31,4 +31,5 @@ func Start(config *config) {
 		commands := GetCommand()
 		commands[scanner.Text()].callback()
 	}
+
 }
