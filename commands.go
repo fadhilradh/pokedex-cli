@@ -60,21 +60,21 @@ func commandExit() error {
 }
 
 func commandMap() error {
-	nextUrl := Cfg.NextLocURL
+	nextUrl := cfg.NextLocURL
 	maps := pokeapi.GetMap(nextUrl)
 	for _, loc := range maps.Results {
 		fmt.Println(loc.Name)
 	}
 	fmt.Println()
 
-	Cfg.NextLocURL = maps.Next
-	Cfg.PrevLocURL = maps.Previous
+	cfg.NextLocURL = maps.Next
+	cfg.PrevLocURL = maps.Previous
 
 	return nil
 }
 
 func commandMapBack() error {
-	prevUrl := Cfg.PrevLocURL
+	prevUrl := cfg.PrevLocURL
 	if prevUrl == nil {
 		fmt.Println("Oops. There is no previous map")
 	} else {
@@ -84,8 +84,8 @@ func commandMapBack() error {
 		}
 		fmt.Println()
 
-		Cfg.NextLocURL = maps.Next
-		Cfg.PrevLocURL = maps.Previous
+		cfg.NextLocURL = maps.Next
+		cfg.PrevLocURL = maps.Previous
 	}
 
 	return nil

@@ -8,22 +8,8 @@ import (
 	"net/http"
 )
 
-type MapResult struct {
-	Name string `json:"name"`
-	URL  string `json:"url"`
-}
-
-type Maps struct {
-	Count    int         `json:"count"`
-	Next     *string     `json:"next"`
-	Previous *string     `json:"previous"`
-	Results  []MapResult `json:"results"`
-}
-
-const BaseUrl = "https://pokeapi.co/api/v2/location"
-
 func GetMap(url *string) Maps {
-	reqUrl := BaseUrl
+	reqUrl := baseURL
 	if url != nil {
 		reqUrl = *url
 	}

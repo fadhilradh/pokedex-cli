@@ -5,16 +5,19 @@ import (
 	"fmt"
 	"log"
 	"os"
+
+	"github.com/fadhilradh/pokedex-cli/internal/pokeapi"
 )
 
-type Config struct {
+type config struct {
+	Client     pokeapi.Client
 	NextLocURL *string
 	PrevLocURL *string
 }
 
-var Cfg = Config{}
+var cfg = config{}
 
-func Start(config *Config) {
+func Start(config *config) {
 
 	for {
 		fmt.Print("Pokedex > ")
