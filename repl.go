@@ -53,7 +53,7 @@ func getCommand() map[string]cliCommand {
 			callback:    commandMap,
 		},
 		"mapb": {
-			name:        "map back",
+			name:        "mapb",
 			description: "List all locations of PokeMap",
 			callback:    commandMapBack,
 		},

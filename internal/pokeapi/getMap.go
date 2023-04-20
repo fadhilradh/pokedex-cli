@@ -2,22 +2,24 @@ package pokeapi
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
-	"log"
 	"net/http"
 )
 
-func GetMap(url *string) Maps {
-	reqUrl := baseURL
-	if url != nil {
-		reqUrl = *url
+func (c *Client) ListLocations(pageURL *string) (Maps, error) {
+	reqURL := baseURL + "/location-area"
+	if pageURL != nil {
+		reqURL = *pageURL
 	}
 
-	fmt.Println(reqUrl)
-	res, err := http.Get(reqUrl)
+	req, err := http.NewRequest("GET", reqURL, nil)
 	if err != nil {
-		log.Fatal(err)
+		return Maps{}, err
+	}
+
+	res, err := c.httpClient.Do(req)
+	if err != nil {
+		return Maps{}, err
 	}
 
 	defer res.Body.Close()
@@ -25,18 +27,14 @@ func GetMap(url *string) Maps {
 	body, err := io.ReadAll(res.Body)
 
 	if err != nil {
-		log.Printf("error decoding response: %v", err)
-		if e, ok := err.(*json.SyntaxError); ok {
-			log.Printf("syntax error at byte offset %d", e.Offset)
-		}
-		log.Printf("response: %q", body)
+		return Maps{}, err
 	}
 
 	maps := Maps{}
 	err = json.Unmarshal(body, &maps)
 	if err != nil {
-		log.Fatal(err)
+		return Maps{}, err
 	}
 
-	return maps
+	return maps, nil
 }
