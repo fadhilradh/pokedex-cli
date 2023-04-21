@@ -6,7 +6,7 @@ import (
 	"github.com/fadhilradh/pokedex-cli/internal/pokeapi"
 )
 
-var pokeClient = pokeapi.NewClient(5*time.Second, time.Minute*1)
+var pokeClient = pokeapi.NewClient(10*time.Second, time.Hour*1)
 var cfg = config{
 	Client: pokeClient,
 }

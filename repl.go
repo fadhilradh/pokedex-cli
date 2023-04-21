@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 )
 
 func StartCLI(config *config) {
@@ -19,10 +20,15 @@ func StartCLI(config *config) {
 		}
 
 		input := scanner.Text()
+		words := strings.Fields(input)
 
-		command, exists := getCommand()[input]
+		command, exists := getCommand()[words[0]]
 		if exists {
-			err := command.callback()
+			locName := []string{}
+			if len(words) > 1 {
+				locName = words[1:]
+			}
+			err := command.callback(&cfg, locName...)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -56,6 +62,11 @@ func getCommand() map[string]cliCommand {
 			name:        "mapb",
 			description: "List all locations of PokeMap",
 			callback:    commandMapBack,
+		},
+		"explore": {
+			name:        "explore",
+			description: "List all pokemons in a location",
+			callback:    commandExplore,
 		},
 	}
 
