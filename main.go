@@ -8,7 +8,8 @@ import (
 
 var pokeClient = pokeapi.NewClient(10*time.Second, time.Hour*1)
 var cfg = config{
-	Client: pokeClient,
+	Client:         pokeClient,
+	CaughtPokemons: map[string]pokeapi.Pokemon{},
 }
 
 func main() {

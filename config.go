@@ -5,7 +5,8 @@ import (
 )
 
 type config struct {
-	Client     pokeapi.Client
-	NextLocURL *string
-	PrevLocURL *string
+	Client         pokeapi.Client
+	NextLocURL     *string
+	PrevLocURL     *string
+	CaughtPokemons map[string]pokeapi.Pokemon
 }
