@@ -30,11 +30,11 @@ func StartCLI(config *config.Config) {
 
 		command, exists := getCommand()[words[0]]
 		if exists {
-			locName := []string{}
+			params := []string{}
 			if len(words) > 1 {
-				locName = words[1:]
+				params = words[1:]
 			}
-			err := command.callback(&cfg, locName...)
+			err := command.callback(&cfg, params...)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -83,6 +83,11 @@ func getCommand() map[string]cliCommand {
 			name:        "inspect",
 			description: "inspect a caught pokemon",
 			callback:    commandInspect,
+		},
+		"pokedex": {
+			name:        "pokedex",
+			description: "list all caught pokemon",
+			callback:    commandPokedex,
 		},
 	}
 
