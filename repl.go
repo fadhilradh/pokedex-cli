@@ -6,9 +6,11 @@ import (
 	"log"
 	"os"
 	"strings"
+
+	"github.com/fadhilradh/pokedex-cli/config"
 )
 
-func StartCLI(config *config) {
+func StartCLI(config *config.Config) {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
@@ -21,6 +23,10 @@ func StartCLI(config *config) {
 
 		input := scanner.Text()
 		words := strings.Fields(input)
+
+		if len(input) == 0 {
+			continue
+		}
 
 		command, exists := getCommand()[words[0]]
 		if exists {
@@ -72,6 +78,11 @@ func getCommand() map[string]cliCommand {
 			name:        "catch",
 			description: "Catch 'em all !",
 			callback:    commandCatch,
+		},
+		"inspect": {
+			name:        "inspect",
+			description: "inspect a caught pokemon",
+			callback:    commandInspect,
 		},
 	}
 

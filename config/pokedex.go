@@ -1,10 +1,10 @@
-package main
+package config
 
 import (
 	"github.com/fadhilradh/pokedex-cli/internal/pokeapi"
 )
 
-type config struct {
+type Config struct {
 	Client         pokeapi.Client
 	NextLocURL     *string
 	PrevLocURL     *string

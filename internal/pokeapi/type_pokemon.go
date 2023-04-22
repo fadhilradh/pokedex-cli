@@ -1,5 +1,22 @@
 package pokeapi
 
+type PokemonInfo struct {
+	Name   string
+	Height int
+	Weight int
+}
+
+type PokemonStats struct {
+	HP             int
+	Attack         int
+	Defense        int
+	SpecialAttack  int
+	SpecialDefense int
+	Speed          int
+}
+
+type PokemonTypes []string
+
 type Pokemon struct {
 	Abilities []struct {
 		Ability struct {
