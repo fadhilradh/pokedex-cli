@@ -13,8 +13,12 @@ import (
 func StartCLI(config *config.Config) {
 	scanner := bufio.NewScanner(os.Stdin)
 
+	GetInput(scanner, "Pokedex > ", mainCommands)
+}
+
+func GetInput(scanner *bufio.Scanner, title string, commandList func() map[string]cliCommand) {
+	fmt.Print(title)
 	for {
-		fmt.Print("Pokedex > ")
 		scanner.Scan()
 		err := scanner.Err()
 		if err != nil {
@@ -28,7 +32,7 @@ func StartCLI(config *config.Config) {
 			continue
 		}
 
-		command, exists := getCommand()[words[0]]
+		command, exists := commandList()[words[0]]
 		if exists {
 			params := []string{}
 			if len(words) > 1 {
@@ -47,7 +51,7 @@ func StartCLI(config *config.Config) {
 
 }
 
-func getCommand() map[string]cliCommand {
+func mainCommands() map[string]cliCommand {
 	return map[string]cliCommand{
 		"help": {
 			name:        "help",
@@ -90,5 +94,19 @@ func getCommand() map[string]cliCommand {
 			callback:    commandPokedex,
 		},
 	}
+}
 
+func EncounterCommands() map[string]cliCommand {
+	return map[string]cliCommand{
+		"battle": {
+			name:        "battle",
+			description: "Battle Pokemon with chance to capture it",
+			callback:    commandBattle,
+		},
+		"run": {
+			name:        "run",
+			description: "Run away with your life !",
+			callback:    commandRun,
+		},
+	}
 }

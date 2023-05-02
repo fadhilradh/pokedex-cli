@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"errors"
 	"fmt"
 	"math/rand"
@@ -22,7 +23,7 @@ func commandHelp(cfg *config.Config, params ...string) error {
 	fmt.Println("Usage:")
 	fmt.Println()
 
-	for _, cmd := range getCommand() {
+	for _, cmd := range mainCommands() {
 		fmt.Printf("%s: %s\n", cmd.name, cmd.description)
 	}
 
@@ -89,9 +90,10 @@ func commandExplore(cfg *config.Config, args ...string) error {
 	fmt.Println("\nExploring " + strings.ReplaceAll(strings.Title(areaName), "-", " ") + "... \n")
 	rand.NewSource(time.Now().UnixNano())
 	randIdx := rand.Intn(len(locDetail.PokemonEncounters))
+	pokemon := locDetail.PokemonEncounters[randIdx].Pokemon.Name
 
 	// TODO : change to cases.Title
-	fmt.Printf("A wild %s encountered ! \n \n", strings.Title(locDetail.PokemonEncounters[randIdx].Pokemon.Name))
+	fmt.Printf("A wild %s encountered ! \n \n", strings.Title(pokemon))
 	fmt.Println(
 		`What will you do ?
 
@@ -100,6 +102,9 @@ func commandExplore(cfg *config.Config, args ...string) error {
 
 [type one of the commands above to continue]
 	`)
+
+	scanner := bufio.NewScanner(os.Stdin)
+	GetInput(scanner, "vs "+pokemon+" > ", EncounterCommands)
 
 	return nil
 }
@@ -165,5 +170,15 @@ func commandPokedex(cfg *config.Config, args ...string) error {
 		fmt.Println("- ", v.Name)
 	}
 
+	return nil
+}
+
+func commandBattle(cfg *config.Config, params ...string) error {
+	fmt.Println("Battle ...")
+	return nil
+}
+
+func commandRun(cfg *config.Config, params ...string) error {
+	fmt.Println("Running away ...")
 	return nil
 }
