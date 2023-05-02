@@ -88,6 +88,7 @@ func commandExplore(cfg *config.Config, args ...string) error {
 
 	// TODO : change to cases.Title
 	fmt.Println("\nExploring " + strings.ReplaceAll(strings.Title(areaName), "-", " ") + "... \n")
+
 	rand.NewSource(time.Now().UnixNano())
 	randIdx := rand.Intn(len(locDetail.PokemonEncounters))
 	pokemon := locDetail.PokemonEncounters[randIdx].Pokemon.Name
@@ -180,5 +181,6 @@ func commandBattle(cfg *config.Config, params ...string) error {
 
 func commandRun(cfg *config.Config, params ...string) error {
 	fmt.Println("Running away ...")
+
 	return nil
 }

@@ -17,8 +17,8 @@ func StartCLI(config *config.Config) {
 }
 
 func GetInput(scanner *bufio.Scanner, title string, commandList func() map[string]cliCommand) {
-	fmt.Print(title)
 	for {
+		fmt.Print(title)
 		scanner.Scan()
 		err := scanner.Err()
 		if err != nil {
@@ -65,17 +65,17 @@ func mainCommands() map[string]cliCommand {
 		},
 		"map": {
 			name:        "map",
-			description: "List all locations of PokeMap",
+			description: "List next 10 locations on the map",
 			callback:    commandMap,
 		},
 		"mapb": {
 			name:        "mapb",
-			description: "List all locations of PokeMap",
+			description: "List previous 10 locations on the map",
 			callback:    commandMapBack,
 		},
 		"explore": {
 			name:        "explore",
-			description: "List all pokemons in a location",
+			description: "Explore a location and find Pokemons",
 			callback:    commandExplore,
 		},
 		"catch": {
@@ -85,12 +85,12 @@ func mainCommands() map[string]cliCommand {
 		},
 		"inspect": {
 			name:        "inspect",
-			description: "inspect a caught pokemon",
+			description: "Inspect a caught pokemon",
 			callback:    commandInspect,
 		},
 		"pokedex": {
 			name:        "pokedex",
-			description: "list all caught pokemon",
+			description: "List all caught pokemon",
 			callback:    commandPokedex,
 		},
 	}
