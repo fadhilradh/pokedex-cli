@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"strings"
+	"time"
 
 	"github.com/fadhilradh/pokedex-cli/config"
 )
@@ -76,17 +78,28 @@ func commandMapBack(cfg *config.Config, params ...string) error {
 }
 
 func commandExplore(cfg *config.Config, args ...string) error {
-	locDetail, err := cfg.Client.GetLocDetail(args[0])
+	areaName := args[0]
+	locDetail, err := cfg.Client.GetLocDetail(areaName)
 
 	if err != nil {
 		return err
 	}
 
-	fmt.Println("Exploring " + args[0])
+	// TODO : change to cases.Title
+	fmt.Println("\nExploring " + strings.ReplaceAll(strings.Title(areaName), "-", " ") + "... \n")
+	rand.NewSource(time.Now().UnixNano())
+	randIdx := rand.Intn(len(locDetail.PokemonEncounters))
 
-	for _, data := range locDetail.PokemonEncounters {
-		fmt.Println("- " + data.Pokemon.Name)
-	}
+	// TODO : change to cases.Title
+	fmt.Printf("A wild %s encountered ! \n \n", strings.Title(locDetail.PokemonEncounters[randIdx].Pokemon.Name))
+	fmt.Println(
+		`What will you do ?
+
+- battle
+- run
+
+[type one of the commands above to continue]
+	`)
 
 	return nil
 }
