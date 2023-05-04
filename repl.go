@@ -7,18 +7,33 @@ import (
 	"os"
 	"strings"
 
+	"github.com/TwiN/go-color"
 	"github.com/fadhilradh/pokedex-cli/config"
 )
 
 func StartCLI(config *config.Config) {
 	scanner := bufio.NewScanner(os.Stdin)
 
+	fmt.Println(color.InGreen(`
+Welcome to Pokedex CLI game !
+
+In this game you can : 
+> explore locations in the Pokemon world 
+> encounter pokemon in each location 
+> catch pokemon and inspect them
+
+Type 'help' to see all available commands in this game.
+
+Catch 'em all !
+
+--- made by fadhilradh with Go ---
+	`))
 	GetInput(scanner, "Pokedex > ", mainCommands)
 }
 
 func GetInput(scanner *bufio.Scanner, title string, commandList func() map[string]cliCommand) {
 	for {
-		fmt.Print(title)
+		fmt.Print(color.InRed(title))
 		scanner.Scan()
 		err := scanner.Err()
 		if err != nil {
@@ -53,16 +68,6 @@ func GetInput(scanner *bufio.Scanner, title string, commandList func() map[strin
 
 func mainCommands() map[string]cliCommand {
 	return map[string]cliCommand{
-		"help": {
-			name:        "help",
-			description: "Displays a help message",
-			callback:    commandHelp,
-		},
-		"exit": {
-			name:        "exit",
-			description: "Exit the Pokedex",
-			callback:    commandExit,
-		},
 		"map": {
 			name:        "map",
 			description: "List next 10 locations on the map",
@@ -92,6 +97,16 @@ func mainCommands() map[string]cliCommand {
 			name:        "pokedex",
 			description: "List all caught pokemon",
 			callback:    commandPokedex,
+		},
+		"help": {
+			name:        "help",
+			description: "Displays a help message",
+			callback:    commandHelp,
+		},
+		"exit": {
+			name:        "exit",
+			description: "Exit the Pokedex",
+			callback:    commandExit,
 		},
 	}
 }
