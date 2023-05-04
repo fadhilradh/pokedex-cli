@@ -34,7 +34,7 @@ Catch 'em all !
 func GetInput(scanner *bufio.Scanner, msg string, commandList func() map[string]cliCommand, isWelcome bool) {
 	for {
 		if isWelcome {
-			fmt.Print(color.InRed(msg))
+			fmt.Print(color.Red + msg + color.Reset)
 		} else {
 			fmt.Print(msg)
 		}
@@ -89,7 +89,7 @@ func mainCommands() map[string]cliCommand {
 		},
 		"catch": {
 			name:        "catch",
-			description: "Catch 'em all !",
+			description: "Attempt to catch a Pokemon. Success chance is based on Pokemon's level and rarity",
 			callback:    commandCatch,
 		},
 		"inspect": {

@@ -19,12 +19,11 @@ type cliCommand struct {
 }
 
 func commandHelp(cfg *config.Config, params ...string) error {
-	fmt.Println("Welcome to the Pokedex!")
-	fmt.Println("Usage:")
+	fmt.Println("Available commands:")
 	fmt.Println()
 
 	for _, cmd := range mainCommands() {
-		fmt.Printf("%s: %s\n", cmd.name, cmd.description)
+		fmt.Printf("%s        : %s\n", cmd.name, cmd.description)
 	}
 
 	fmt.Println()
