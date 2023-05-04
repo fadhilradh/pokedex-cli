@@ -28,12 +28,16 @@ Catch 'em all !
 
 --- made by fadhilradh with Go ---
 	`))
-	GetInput(scanner, "Pokedex > ", mainCommands)
+	GetInput(scanner, "Pokedex > ", mainCommands, true)
 }
 
-func GetInput(scanner *bufio.Scanner, title string, commandList func() map[string]cliCommand) {
+func GetInput(scanner *bufio.Scanner, msg string, commandList func() map[string]cliCommand, isWelcome bool) {
 	for {
-		fmt.Print(color.InRed(title))
+		if isWelcome {
+			fmt.Print(color.InRed(msg))
+		} else {
+			fmt.Print(msg)
+		}
 		scanner.Scan()
 		err := scanner.Err()
 		if err != nil {

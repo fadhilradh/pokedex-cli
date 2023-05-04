@@ -105,7 +105,7 @@ func commandExplore(cfg *config.Config, args ...string) error {
 	`)
 
 	scanner := bufio.NewScanner(os.Stdin)
-	GetInput(scanner, "vs "+pokemon+" > ", EncounterCommands)
+	GetInput(scanner, "vs "+pokemon+" > ", EncounterCommands, false)
 
 	return nil
 }
