@@ -90,10 +90,17 @@ func commandExplore(cfg *config.Config, args ...string) error {
 
 	rand.NewSource(time.Now().UnixNano())
 	randIdx := rand.Intn(len(locDetail.PokemonEncounters))
-	pokemon := locDetail.PokemonEncounters[randIdx].Pokemon.Name
+	pokemonName := locDetail.PokemonEncounters[randIdx].Pokemon.Name
+	pokemonDetail, err := cfg.Client.GetPokemon(pokemonName)
+
+	if err != nil {
+		return err
+	}
+
+	cfg.CurrentPokemonEncountered = pokemonDetail
 
 	// TODO : change to cases.Title
-	fmt.Printf("A wild %s encountered ! \n \n", strings.Title(pokemon))
+	fmt.Printf("A wild %s encountered ! \n \n", strings.Title(pokemonName))
 	fmt.Println(
 		`What will you do ?
 
@@ -104,7 +111,7 @@ func commandExplore(cfg *config.Config, args ...string) error {
 	`)
 
 	scanner := bufio.NewScanner(os.Stdin)
-	GetInput(scanner, "vs "+pokemon+" > ", EncounterCommands, false)
+	GetInput(scanner, "vs "+pokemonName+" > ", EncounterCommands, false)
 
 	return nil
 }
@@ -179,6 +186,13 @@ func commandBattle(cfg *config.Config, params ...string) error {
 }
 
 func commandRun(cfg *config.Config, params ...string) error {
+	pokemonExp := cfg.CurrentPokemonEncountered.BaseExperience
+
+	randNum := rand.Intn(pokemonExp)
+	if randNum > 36 {
+		fmt.Println("Can't escape !")
+		return nil
+	}
 	fmt.Println("Running away ...")
 
 	return nil
